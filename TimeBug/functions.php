@@ -1,10 +1,13 @@
 <?php
    // echos a combo box with all of the choices of mission (for this person).  
    // It will init to $selected if that matches on of the valid $mishIDs.
+   global $mishResults; // list of missions, re-use rather than refetch if possible
    function mishChoices( $personID, $selected )
    {
+      global $mishResults;
       $q = "SELECT category, subcat, importance, mishID FROM Mission WHERE personID='$personID' ORDER BY mishOrder; ";
-	  $r = mysql_query( $q );
+	  if ( $mishResults==0 ) { $r = mysql_query( $q ); /* echo "first"; */ $mishResults = $r; }
+	  else { $r = $mishResults; mysql_data_seek($r,0); /* echo "next"; */ }
 	  if ( noerror( $r ) )
 	  {
 	     echo "<select name='mishID'>\n";

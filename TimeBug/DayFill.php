@@ -1,13 +1,13 @@
 <?php
    // DayFill.php
-   // under construction
+   // 
    // $_GET['theDate'] can be set, default is today.
    // Show all events for this day, and create forms for all of the gaps.  
    // The forms should allow the user to quickly fill in 
    //  1. new events, just pick mission and duration
-   //  2. pick an existing task.
+   //  2. pick an existing task (in progress).
    //  It might also be good to have one click buttons for the most common fills,
-   //  travel, food, getting organized, misc.  
+   //  travel, food, getting organized, misc.  (in progress)
    // 
 
    global $bug;
