@@ -206,6 +206,7 @@
           echo "startTme: <input name='startTime' value='$startSlot' size='5' />,\n";
           echo "endTime: <input name='endTime' value='$endSlot' size='5' />,\n";
           mishChoices($personID, 0 );
+		  taskChoices($personID, 0 );
           echo "<input type='submit' value='book it' />";
           echo "</form>";
           echo " </td>  ";

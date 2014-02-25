@@ -18,7 +18,7 @@ Task -- These are specific things to do.  eg. prep a particular class, or
       reading an article.  We need to make provisions for recurring tasks.
    personID - applies to this person
    taskID - ID, key with personID
-   description - what you have to do.
+   description - what you have to do. this is really just the title of the task.
    duration - how long we expect it to take, in hours.  for recurring tasks,
       this is for ONE time.  
    recurs - 0 for one-time event, if recurring give the interval in days
@@ -29,6 +29,7 @@ Task -- These are specific things to do.  eg. prep a particular class, or
    mustdo - -1 means just use importance of associated Mission, else this is 0-10. 
    tstatus - 0 not done, 1 done, 2 booked.
    tied - was created automatically from a booking.
+   details - more about the task.
    
    // suggested additions ....
    durFlex - how much (in hours) the duration of this event can be varied.  
