@@ -1,0 +1,9 @@
+<drawingdate>04/20/04</drawingdate>
+
+<puzzle>
+<statement> What is the square root of 16? </statement>
+<sample>-247</sample>
+<correct>4</correct>
+<correct>-4</correct
+<correct>+4</correct>
+</puzzle>

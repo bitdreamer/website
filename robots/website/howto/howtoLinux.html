@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>howto</title>
+</head>
+
+<body vlink="#990000" alink="#990000">
+<font face="Georgia">
+<a name="top">
+<div align="left">
+<img src="howtolinux.gif">
+</div>
+</a>
+<br>
+
+<p>Our first piece of advice is to read the README file. You
+ will find that it can be very informative and helpful, and it
+ will probably tell you some things that we won't cover here.
+<br>
+ Our second piece of advice is to pick a topic from the list
+ below for step by step instructions that even a 10 yr old
+ could follow.</p>
+
+<font size="4">
+<ul>
+	<li>
+		<a href="#install2">Install leJOS</a>
+		<br>
+		<br>
+	</li>
+	<li>
+		<a href="#firmware2">Load firmware to RCX</a>
+		<br>
+		<br>
+	</li>
+	<li>
+		<a href="#program2">Load programs to RCX</a>
+		<br>
+		<br>
+	</li>
+</ul>
+</font>
+<br>
+<br>
+<font size="4">
+<b>
+<a name="install2">How to install leJOS</a>
+</b>
+</font>
+<br>
+<br>
+<p>1) Download the correct version of leJOS from the 
+<a href="http://lejos.sourceforge.net/" target="new">leJOS site</a>
+</p>
+
+<p>2) Go to the directory you downloaded leJOS to and unzip the leJOS
+ file using gunzip or some other application. Type "<i><b>gunzip (insert file name)</b></i>".
+</p>
+
+<p>3) Go to the directory you downloaded leJOS to and untar the leJOS
+ file using the tar command.  Type "<i><b>tar xvf (insert file name)</b></i>".
+</p>
+
+<p>4) Add the JDK bin and the leJOS bin folder to your PATH.
+ Type "<i><b>export PATH=$PATH:(insert full address for
+ leJOS)\bin:(insert full address for JDK)\bin</b></i>" followed by the enter key.
+ For example, I would type "<i><b>export PATH=$PATH:/usr/local/lejos/bin:/usr/local/j2sdk1.4.0_01/bin</b></i>"
+ because my copies of leJOS and JDK are located in the /usr/local directory.
+</p>
+
+<p>5) Go to the leJOS directory and run the Makefile by simply typing "<i><b>make</b></i>".
+ Please notice it's lowercase.  This step creates the tools and scripts necessary to run leJOS.
+</p>
+
+<p>6) Set the RCXTTY variable to the infared tower. For example, if you are using the serial IR tower, it might
+ be something like this "<i><b>export RCXTTY=/dev/ttyS1</b></i>" or "<i><b>export RCXTTY=/dev/ttyS2</b></i>"
+ where the numbers 1 and 2 represent the serial port number.
+</p>
+<font size="2">NOTE: steps 4 and 6 must be done each time a new window is opened.  As an alternative, you could easily
+ create a shell script to run each time and save you a step or two.</font>
+<br>
+<font size="2">
+<a href="#top">back to top</a>
+</font>
+<br>
+<br>
+<br>
+
+<font size="4">
+<b>
+<a name="firmware2">How to load the firmware to RCX</a>
+</b>
+</font>
+<br>
+<br>
+<p>1) Make sure the PATH and RCXTTY are correct by typing "<i><b>echo $PATH</b></i>" and
+ "<i><b>echo RCXTTY</b></i>" into a window. (see steps 4 and 6 of
+ <a href="#install1">How to install leJOS</a>)
+</p>
+
+<p>2) Turn the RCX on and position the RCX in front of the IR tower.
+</p>
+
+<p>3) Type "<i><b>lejosfirmdl -f</b></i>".  When the firmware starts,
+ the LCD (screen on the RCX) shows the battery voltage, and
+ you should hear a double beep.
+</p>
+<font size="2">NOTE: Downloading the firmware only needs to be done once and
+ it can easily be overwritten by the LEGO firmware that comes on the CD-ROM.
+</font>
+<br>
+<font size="2">
+<a href="#top">back to top</a>
+</font>
+<br>
+<br>
+<br>
+
+<font size="4">
+<b>
+<a name="program2">How to load programs to RCX</a>
+</b>
+</font>
+<br>
+<br>
+<p>1) Make sure the PATH and RCXTTY are correct by typing "<i><b>echo $PATH</b></i>" and
+ "<i><b>echo RCXTTY</b></i>" into a DOS prompt. (see steps 4 and 6 of
+ <a href="#install2">How to install leJOS</a>)
+</p>
+
+<p>2) Turn the RCX on and position the RCX in front of the IR tower.
+</p>
+
+<p>3) Go to the folder where your program is by typing "<i><b>cd (insert full address of that folder)</b></i>"
+</p>
+
+<p>4) Type "<i><b>export CLASSPATH=.</b></i>".
+</p>
+
+<p>5) Compile each .java file in the folder by typing "<i><b>lejosc *.java</b></i>".
+ Or compile each .java file individually by typing "<i><b>lejosc (filename).java</b></i>".
+</p>
+
+<p>6) Once successfully compiled, load the program to the RCX by typing
+ "<i><b>lejos (filename of the file that has the main method)</b></i>".
+ Note the absence of the ".java".
+</p>
+<font size="2">
+<a href="#top">back to top</a>
+</font>
+<br>
+<br>
+<br>
+</font>
+</body>
+</html>

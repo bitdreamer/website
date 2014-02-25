@@ -1,0 +1,55 @@
+//****************************************************
+// Maze.java   Author: Rebecca Fosdick
+//
+// This program allows the RCX to walk through a maze
+// of reflective tape with minimal difficulty.
+// Remember the threshold of 50% is set for our lab
+// not yours.
+//****************************************************
+
+import josx.platform.rcx.*;
+
+public class Maze implements SensorConstants
+{
+   public static void main(String[] args)
+   {
+      // light threshold
+      final int THRESHOLD = 50;
+      // identifies what kind of sensor is in what port
+      Sensor.S2.setTypeAndMode (SENSOR_TYPE_LIGHT, SENSOR_MODE_PCT);
+      Sensor.S2.activate();
+      Sensor.S3.setTypeAndMode (SENSOR_TYPE_LIGHT, SENSOR_MODE_PCT);
+      Sensor.S3.activate();
+
+      // sets the motor speed
+      Motor.A.setPower(3);
+      Motor.C.setPower(3);
+
+      Move mv = new Move();
+      while (true)
+      {
+	 // if inner sensor sees the floor and outer sensor sees the tape
+	 // then move forward
+         if ((Sensor.S2.readValue() < THRESHOLD) && (Sensor.S3.readValue() > THRESHOLD))
+         {
+            mv.Fwd(0.4);
+         }
+
+	 // if inner sensor sees the floor and outer sensor sees the floor
+	 // then move backward and turn to the right slightly
+         if ((Sensor.S2.readValue() < THRESHOLD) && (Sensor.S3.readValue() < THRESHOLD))
+         {
+            mv.Bwd(0.4);
+            mv.turnRight(0.7);
+         }
+
+	 // if inner sensor sees the tape and outer sensor sees the tape
+	 // then move backward and turn to the left slightly
+         if ((Sensor.S2.readValue() > THRESHOLD) && (Sensor.S3.readValue() > THRESHOLD))
+         {
+            mv.Bwd(0.4);
+            mv.turnLeft(0.7);
+         }
+      }
+   }
+}

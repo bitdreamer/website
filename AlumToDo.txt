@@ -1,0 +1,15 @@
+Alum websiste
+to do list
+
+
+ToDo - 
+   todoID - number of item
+   title - short lable of job
+   description - full text of what needs to be done
+   subDate - when we this submitted, requested to be done
+   subPerson - who made this request.  this is going to depent on how
+      people are identified in the system. 
+   status - 1=submitted nothing yet, 2=progress, 3=done 4=approved?
+   working - text talking about progress or whatever
+   doPerson - who is working on this.  Maybe I should standardize the way
+      I do people in systems, table Person, fields personID, firstname, lastName.

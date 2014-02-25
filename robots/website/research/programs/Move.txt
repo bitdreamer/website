@@ -1,0 +1,193 @@
+//*********************************************************
+
+// Move.java   Author: Rebecca Fosdick
+
+// The Move class is for intro-programmers to use 
+
+// as a base for lab assignments concerning the RCX.
+
+// You MUST use integers because the Sleep class
+
+// doesn't support doubles or floats.  Sorry.
+
+//
+
+// NOTE:  Motor.A represents the left motor 
+
+// and Motor.C represents the right motor.
+
+// (Refer to the leJOS APIs for more details.)
+
+//*********************************************************
+
+
+
+import josx.platform.rcx.*;
+
+
+public class Move
+
+{
+	public Move() {}
+
+
+
+	// moves RCX forward
+
+	public void Fwd()
+
+	{
+
+	   Motor.A.forward();
+
+	   Motor.C.forward();
+
+	}
+
+
+
+	// moves RCX forward for seconds # of seconds
+
+	public void Fwd(double seconds)
+
+	{
+
+	   Motor.A.forward();
+
+	   Motor.C.forward();
+
+	   Sleep slp = new Sleep();
+
+	   slp.pause(seconds);
+
+	}
+
+
+
+	// moves RCX backward
+	public void Bwd()
+
+	{
+
+	   Motor.A.backward();
+
+	   Motor.C.backward();
+
+	}
+
+
+
+	// moves RCX backward for seconds # of seconds
+
+	public void Bwd(double seconds)
+
+	{
+
+	   Motor.A.backward();
+
+	   Motor.C.backward();
+
+	   Sleep slp = new Sleep();
+
+	   slp.pause(seconds);
+
+	}
+
+
+
+	// turns RCX to the right
+
+	public void turnRight()
+
+	{
+
+	   Motor.A.forward();
+
+	   Motor.C.stop();
+
+	}
+
+
+
+	// turns RCX to the right for seconds # of seconds
+
+	public void turnRight(double seconds)
+
+	{
+
+	   Motor.A.forward();
+
+	   Motor.C.stop();
+
+	   Sleep slp = new Sleep();
+
+	   slp.pause(seconds);
+
+	}
+
+
+
+	// turns RCX to the left
+
+	public void turnLeft()
+
+	{
+
+	   Motor.A.stop();
+
+	   Motor.C.forward();
+
+	}
+
+
+
+	// turns RCX to the left for seconds # of seconds
+
+	public void turnLeft(double seconds)
+
+	{
+
+	   Motor.A.stop();
+
+	   Motor.C.forward();
+
+	   Sleep slp = new Sleep();
+
+	   slp.pause(seconds);
+
+	}
+
+
+
+	// makes RCX halt all movement
+
+	// a good way to end a program ;-)
+
+	public void Stop()
+
+	{
+
+	   Motor.A.stop();
+
+	   Motor.C.stop();
+
+	}
+
+
+
+	// makes RCX halt all movement for seconds # of seconds
+	public void Stop(double seconds)
+
+	{
+
+	   Motor.A.stop();
+
+	   Motor.C.stop();
+
+	   Sleep slp = new Sleep();
+
+	   slp.pause(seconds);
+
+	}
+
+}

@@ -1,0 +1,52 @@
+//********************************************************
+
+// Sleep.java    Author: Rebecca Fosdick
+
+//  The Sleep class is used for intro-programmers 
+
+// who do not know exceptions or threads yet.
+
+// pause method causes the current thread to sleep/pause
+
+// for delay milliseconds.
+
+// (Refer to the leJOS APIs for more details.)
+
+//********************************************************
+
+
+public class Sleep
+
+{
+
+	// number of ms to sleep
+
+	private int delay;
+
+
+
+	public Sleep() {}
+
+
+	// seconds is the number of seconds to sleep
+
+	public void pause(double seconds)
+
+	{
+
+	   delay = (int)(seconds * 1000);
+
+
+	   try
+
+	   {
+
+	      Thread.sleep(delay);
+
+	   }
+
+	   catch (Exception e) {}
+
+	}
+
+}

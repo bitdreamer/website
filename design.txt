@@ -1,0 +1,138 @@
+2011 
+Bit Lab website design
+
+We need to get some basics under control.  
+
+Alum: 
+   alumID    autonumber (change this from "id")
+   firstName  official
+   nickName  whatever they want
+   lastName  current
+   lastNameSchool  what they were called in school
+   major   "CSC" or "CIS" or "MCS"
+   gradDate   actual date if gradActual is set, else just estimate
+   gradActual  boolean, whether they have actually graduated
+   babs    "ba" or "bs".
+   email    current
+   sharing  1=only system admins can see, 2=dept admins,
+            3=fellow majors, 4=all meredith students,
+            5=prospects, 6=public
+   password
+   userLevel  1=sys admin, 2=dept admin, 3=dept alum, 4=college alum
+              5=prospect, 6=nobody/public
+   
+general public pages
+   home page
+   various hyp pages, history, why come here ... 
+      list of machines. ShowStuff.php
+   profiled alums
+   login (but of course once you login you are on pages below)
+   
+prospective students
+   register page
+   mentor registration page?
+
+alums
+   page to register.  note: they should try "forgot password" 1st
+      if email address is right.
+   page to change data, email, etc.  That page should mail ME of changes.
+   page to see fellow alums
+   profile page about career to show off
+
+admin
+   pages to list, read, add and edit everyone in the system, including password.
+   
+Content
+   +contentID - (key) (int) unique across all depts.  will be used for directory.
+      generated automatically.
+   title - (varchar 50) what shows when we list it, the name of the event or whatever
+      this piece of content is about
+   theWords - (longtext) text of Content
+   active - (boolean) flag, only show active content
+   sequence - (int) sets order for listing with others of this topic
+   topicCode - (f.key) (int) which sort of thing is this listed with 
+      (curriculum, list of machines in the lab, opportunities for students)
+      (note: topicCodes are unique for departments, even if several department
+      have 'opportunities', for example)
+   *source - Alum.id of user who did it.  This could come in handy for troubleshooting.
+      I don't see where we'd need to show it.
+
+Picture - every photo has a record
+   +- contentID - (f.key) this is the event that this picture goes with
+   pictureName - of the file.  file is pix/topicCode/contentID/pictureName .
+   caption - some won't need it, but some might
+   sequence - 
+   source - Alum.id of submitter.  This could come in handy for troubleshooting.
+      I don't see where we'd need to show it.
+
+Topic - kinds of things we show.  These get listed on the left menu, so these
+      should be major areas of interest of someone browsing.
+   name - (varchar 30) what shows in the menu
+   code - (int)  unique for all topics (across departments)
+   desc - (longtext) this blurb will appear at the beginning of the page on this topic.
+   level - (int) we can list topics, like alumni profiles, that only people logged
+           in can see, stuff like that.  I can load administrative stuff and
+           no regular user will ever see it.  level X means  users of 
+           level X or less can see it.
+   active - (boolean) whether or not to show this whole topic
+   dept - e.g., "CSC"
+   
+* not added yet
+
+Probe - any set of questions we want to ask someone.
+  probeID - int, unique.
+  probeName - whatever the person creating it wants to call it.
+  probeDate - of creation.
+  available - int, 0=no, 1=once, 2=repeatable
+  subject - ctegory of survey.  In the future this might get replaced by a
+     hierarchical structure of areas and sub-areas.
+ 
+Question - one question on a survey.
+  probeID- - what survey is this question for.
+  questionID - this just counts within a probe.
+  question - text of what you are asking.
+  rhetoric - what TYPE of question, yes/no, multiple choice.  As we write code
+     to handle more types, this can be more things.  
+  active - does this question show up when someone takes this test.
+  picture - if one is needed for the question
+Choice - possible answer to a question.  Not all question types have choices.
+  probeID - this and next form compound foreign key.
+  questionID - question that this choice is for.
+  choiceID - within the question.  key is these 3 fields.
+  choice - text of what a person can choose.
+  correctness - whether this choice is correct (for tests, not surveys)
+  picture - if one is needed
+Reply - a set of answers to a Probe's questions.
+  probeID - foreign key 
+  alumID - foreign key
+  replyID - if there are multiple replies allowed, count them.
+  date - when reply was given.
+  noLogKey - random code that lets a person respond to an email directly
+     without logging in.
+  drawing - we could let the user login
+  grade - total of points of answers.
+Answer - probe taker's answer to a single question
+   probeID, alumID, replyID, 
+   questionID,
+   choiceID, 
+   answer
+   score - 
+   
+Machine
+   name - key, use lower case so we can us it in scripts
+   ip - just the last part.  152.35.41.
+   status  - 0=non-existent 1=hardware not up, 2=no boot, 3=flakey, 4=os solid,
+       5=with software
+   comment - 
+   parts - text with specific names 
+   os - don't forget the version number 
+   year - when we got it, made it
+   hd - size in GB
+   ram - size in GB
+   builtBy - text, any number of builders
+   
+MachineLog
+   machineName
+   words
+   authorID
+   date

@@ -1,0 +1,22 @@
+   
+<html>
+<head>
+
+</head>
+<body style="background-color:grey">
+
+
+     <img src="head3.jpg" usemap="#schoolies" />  
+     <map name="schoolies" id="schoolies">
+      <area shape="rect" coords="0 0 160 40"
+           href="http://www.meredith.edu" target="_top" />
+      <area shape="rect" coords="200 0 330 40" 
+           href="http://www.meredith.edu/math"   />
+      <area shape="rect" coords="0 50 330 100"
+           href="http://www.bitlab.meredith.edu" />
+     </map>
+   
+         <img src="softe4.jpg" /> 
+
+</body>
+</html>

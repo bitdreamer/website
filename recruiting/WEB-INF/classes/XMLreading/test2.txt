@@ -1,0 +1,23 @@
+<drawingdate>04/20/04</drawingdate>
+<puzzle>
+<statement>
+The statement of the 1st puzzle goes here, along with any special 
+instructions to the student about this particular puzzle.
+</statement>
+<image>C:/April/SoftwareEngineering/thingamajig.gif</image>
+<sample>An example demonstrating the correct format for responses.</sample>
+<correct>Correct answer</correct>
+<splat>Another correct answer</correct>
+<correct>
+The number of these entries depends on how many correct answers are 
+provided.
+</correct>
+</puzzle>
+
+<puzzle>
+<statement> What is the square root of 16? </statement>
+<sample>-247</sample>
+<correct>4</correct>
+<correct>-4</correct>
+<correct>+4</correct>
+</puzzle>

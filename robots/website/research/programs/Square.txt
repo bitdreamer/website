@@ -1,0 +1,47 @@
+//**************************************************
+
+// Square.java    Author: Rebecca Fosdick
+
+//
+
+// Demonstrates the use of the Move class.
+
+// Moves the RCX in a square.
+
+//**************************************************
+
+
+
+import josx.platform.rcx.*;
+
+
+public class Square
+
+{
+	public static void main(String[] args)
+
+	{
+
+	   Move mv = new Move();
+
+	   mv.Fwd(7);
+
+	   mv.turnRight(6);
+
+	   mv.Fwd(4);
+
+	   mv.turnRight(6);
+
+	   mv.Fwd(7);
+
+	   mv.turnRight(6);
+
+	   mv.Fwd(4);
+
+	   mv.turnRight(6);
+
+	   mv.Stop();
+
+	}
+
+}

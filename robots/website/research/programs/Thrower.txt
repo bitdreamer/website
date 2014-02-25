@@ -1,0 +1,51 @@
+//***************************************************
+// Thrower.java   Author: Rebecca Fosdick
+//
+// The Thrower program instructs the RCX to move
+// forward until it bumps into something.  When it does,
+// throw a projectile toward whatever it rammed.
+//***************************************************
+
+import josx.platform.rcx.*;
+
+public class Thrower implements SensorConstants
+{
+   public static void main(String[] args)
+   {
+      // identifies the type and mode of each needed port
+      Sensor.S2.setTypeAndMode(SENSOR_TYPE_TOUCH, SENSOR_MODE_BOOL);
+      Sensor.S2.activate();
+
+      Move mv = new Move();
+      Sleep slp = new Sleep();
+      while (true)
+      {
+         // if it hasn't bumped anything, move forward
+         if (!(Sensor.S2.readBooleanValue()))
+         {
+            mv.Fwd(0.4);
+         }
+
+         // if it has bumped anything, throw projectile
+         else
+         {
+            // throwing motion
+            mv.Stop();
+            Motor.B.setPower(7);
+            Motor.B.forward();
+            slp.pause(0.5);
+
+            // set up for reloading
+            Motor.B.setPower(1);
+            Motor.B.backward();
+            slp.pause(0.5);
+            Motor.B.stop();
+
+            // back up, turn, and wait for reload
+            mv.Bwd(3);
+            mv.turnRight(5);
+            mv.Stop(2);
+         }
+      }
+   }
+}

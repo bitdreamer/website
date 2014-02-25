@@ -1,0 +1,24 @@
+//******************************************************
+// Spiral.java     Author: Rebecca Fosdick
+//
+// Instructs the RCX to move in an outward spiral from
+// its starting position.  Could be used to "search" for items.
+//******************************************************
+
+public class Spiral
+{
+	public static void main(String[] args)
+	{
+	   Move mv = new Move();
+           // time to move forward in seconds
+	   double time = 0.5;
+
+	   // moves forward, turns, and increases time by 0.5 seconds
+	   while (true)
+	   {
+		mv.Fwd(time);
+		mv.turnRight(6);
+		time = time + 0.5;
+	   }
+	}
+}

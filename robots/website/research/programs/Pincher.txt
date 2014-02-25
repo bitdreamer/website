@@ -1,0 +1,58 @@
+//*************************************************
+// Pincher.java   Author: Rebecca Fosdick
+//
+// The Pincher program instructs the RCX to grab
+// whatever it bumps into, move the object, then
+// continue on original path.
+//*************************************************
+
+import josx.platform.rcx.*;
+
+public class Pincher implements SensorConstants
+{
+   public static void main(String[] args)
+   {
+      // identifies type and mode of each needed port
+      Sensor.S2.setTypeAndMode(SENSOR_TYPE_TOUCH, SENSOR_MODE_BOOL);
+      Sensor.S2.activate();
+
+      boolean quit = false;
+      Move mv = new Move();
+      Sleep slp = new Sleep();
+      while (true)
+      {
+         // if it hasn't bumped anything, move forward
+         if (!(Sensor.S2.readBooleanValue()))
+         {
+            mv.Fwd(0.4);
+         }
+
+         // if it has bumped anything, grab and move object
+         else
+         {
+            // grabbing motion
+            mv.Stop();
+            Sensor.S2.passivate();
+            Motor.B.backward();
+            slp.pause(0.4);
+            Motor.B.stop();
+
+            // moving object
+            mv.Bwd(2);
+            mv.turnRight(6);
+            mv.Fwd(2);
+            mv.Stop();
+
+            // let go of object
+            Motor.B.forward();
+            slp.pause(0.4);
+            Motor.B.stop();
+
+            // get back on original path 
+            mv.Bwd(3);
+            mv.turnLeft(6);
+
+         }
+      }
+   }
+}

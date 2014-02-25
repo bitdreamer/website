@@ -1,0 +1,21 @@
+
+/*BASIC ELEMENTS */
+
+body{		
+		margin:0;
+		padding: 0;		
+		background: #001122;
+		
+		}
+	
+
+/* LAYOUT */
+		
+#main{ 
+      width: 800px;
+		float: left;
+      background-color:rgb(220,220,220); 
+      padding:20;
+		}
+		
+

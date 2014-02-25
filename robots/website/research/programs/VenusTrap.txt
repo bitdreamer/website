@@ -1,0 +1,58 @@
+   //***************************************************
+// VenusTrap.java   Author: Rebecca Fosdick
+//
+// The VenusTrap program instructs the RCX to move
+// forward until it bumps into something.  When it does,
+// capture the object in the red box then deliver elsewhere.
+//***************************************************
+
+import josx.platform.rcx.*;
+
+public class VenusTrap implements SensorConstants
+{
+   public static void main(String[] args)
+   {
+      // identifies the type and mode of each needed port
+      Sensor.S2.setTypeAndMode(SENSOR_TYPE_TOUCH, SENSOR_MODE_BOOL);
+      Sensor.S2.activate();
+
+      Move mv = new Move();
+      Sleep slp = new Sleep();
+      boolean hold = true;
+      while (true)
+      {
+         // if it hasn't bumped anything, move forward
+         if (!(Sensor.S2.readBooleanValue()))
+         {
+            mv.Fwd(0.4);
+         }
+
+         // if it has bumped anything, catch it
+         else
+         {
+            // capture object
+            mv.Stop();
+            Motor.B.setPower(1);
+            Motor.B.backward();
+            slp.pause(2.5);
+            Motor.B.stop();
+
+            // repositioning
+            mv.turnLeft(3);
+            mv.Fwd(1);
+            mv.Stop();
+
+            // release object
+            Motor.B.setPower(3);
+            Motor.B.forward();
+            slp.pause(2);
+            Motor.B.stop();
+
+            // repositioning
+            mv.Bwd(2);
+            mv.turnRight(2);
+            mv.Stop();
+         }
+      }
+   }
+}

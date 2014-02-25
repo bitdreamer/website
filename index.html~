@@ -1,0 +1,20 @@
+<html>
+
+<frameset rows="100,*" frameborder="no">
+   
+  <frame src="head.html" name="head" scrolling="no" />
+
+     <frameset cols="200,*">
+       <frame src="sidebar.html" name="sidebar" />
+        
+         <frameset rows="*,65">
+            <frame src="body.html" name="body" />
+            <frame src="foot.html" name="foot" scrolling="no" />
+         </frameset>                  
+      
+     </frameset>
+
+ 
+</frameset>
+
+</html>
