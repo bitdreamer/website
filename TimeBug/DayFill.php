@@ -177,24 +177,22 @@
       global $sc; // slot count, number for THIS slot (all field add nubmer to name)
          $personID = $_SESSION['personID'];
 
-      echo "<tr> <td> $startSlot to $endSlot </td>  ";
+      echo "<form method='POST' action='DayFill2.php' >\n";
+      echo "<tr> <td> <input name='startTime$sc' value='$startSlot' size='5' />  to "
+	      ." <input name='endTime$sc' value='$endSlot' size='5' /> </td>  ";
 	  echo " <td>   ";
-          echo "<form method='POST' action='DayFill2.php' >\n";
 		  echo "<input type='hidden' name='sc' value='$sc'/>";
           echo "<input type='hidden' name='personID$sc' value='$personID' />\n";
           echo "what: <input id='description$sc' name='description$sc' />,\n";
           echo " <input type='hidden' name='startDate$sc' value='$whenstring' />\n";
           echo " <input type='hidden' name='endDate$sc' value='$whenstring' />\n";
-          echo "startTme: <input name='startTime$sc' value='$startSlot' size='5' />,\n";
-          echo "endTime: <input name='endTime$sc' value='$endSlot' size='5' />,\n";
-          //mishChoices($personID, 0 );
-		  //taskChoices($personID, 0 );
 		  mtChoices( $personID, $sc );
 		  echo "<input type='hidden' id='taskID$sc' name='taskID$sc' value='-1' />";
           echo "<input type='submit' value='book it' />";
-          echo "</form>";
           echo " </td>  ";
 	  echo "</tr> \n";
+	  
+      echo "</form>";
 	  $sc++;
    }
 ?>
