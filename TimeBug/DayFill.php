@@ -10,7 +10,7 @@
    //  travel, food, getting organized, misc.  (in progress)
    // 
 
-   global $bug;
+   global $bug, $sc; $sc=0; // $sc is slotCount, indexing down the form.
    $bug = false;
    session_start();
    include("../includeInAll.php");
@@ -26,6 +26,7 @@
 <html>
 <head>
 <script type="text/javascript" src="errorHandler.js"> </script>
+<script type="text/javascript" src="functions.js"> </script>
 </head>
 <body>
 <?php
@@ -45,7 +46,7 @@
 
    function dayToFill( $personID )
    {
-      global $bug;
+      global $bug, $sc;
       date_default_timezone_set("America/New_York");	  
 	  $now = getdate(); // associative array with date and time info
 	  $nowdate = $now['year']."-".$now['mon']."-".$now['mday'];
@@ -129,31 +130,7 @@
 			echo "      <td> <a href='BookingEdit.php?bookingID=$bookingID'> $descripsh </a> </td>\n";
 			//echo "      <td> ";
 			
-/*
-			// put taskID for this booking in POST , also send info about whether this task is "tied" to Booking
-			echo "<input type='hidden' name='t4b$bookingID' value='$taskID' > \n";
-			echo "<input type='hidden' name='tied$bookingID' value='$tied' > \n";
-			
-			// only show status entry buttons below for bookings that are past and have status=0
-			if ($bug) { echo "status=$status /";  }
-			echo " no info: <input type='radio' name='status$bookingID' value='0' ";
-			if ( $status==0 ) { echo "checked"; }
-			echo " > | \n";
-			if ( $recurs==0 )
-			{  
-			   echo " task done: <input type='radio' name='status$bookingID' value='1'  ";
-			   if ( $status==1 ) { echo "checked"; }
-			   echo " > | \n";
-			}
-			echo " logged: <input type='radio' name='status$bookingID' value='2'  ";
-			if ( $status==2 ) { echo "checked"; }
-			echo " > | \n";
-			echo " awol: <input type='radio' name='status$bookingID' value='3'  ";
-			if ( $status==3 ) { echo "checked"; }
-			echo " > | \n";
-			echo " delete: <input type='radio' name='status$bookingID'  value='4'  ";
-			echo " > \n";
-*/
+
 			//echo " </td>\n";
 			echo "   </tr>\n";
 		 }
@@ -174,6 +151,8 @@
 		 echo "<tr> <td colspan='3'> </td> </tr>\n";
 		 echo "<table>\n";
 		 //echo "</form>\n";
+		 
+		 // when we go to ONE form for all, we need to echo $sc as a hidden tag
 
 		 
 		 // need a submit button here ... 
@@ -191,25 +170,97 @@
 ?>
 <?php
    // echo a row in the table which is a form that allows the user to 
-   // fill this time slot
+   // fill this time slot.
+   // every field gets the slot number tacked on the end of the name and id.
    function slotFill( $startSlot, $endSlot, $whenstring )
    {
+      global $sc; // slot count, number for THIS slot (all field add nubmer to name)
          $personID = $_SESSION['personID'];
 
       echo "<tr> <td> $startSlot to $endSlot </td>  ";
 	  echo " <td>   ";
-          echo "<form method='POST' action='BookingAdd2.php' >\n";
-          echo "<input type='hidden' name='personID' value='$personID' />\n";
-          echo "what: <input name='description' />,\n";
-          echo " <input type='hidden' name='startDate' value='$whenstring' />\n";
-          echo " <input type='hidden' name='endDate' value='$whenstring' />\n";
-          echo "startTme: <input name='startTime' value='$startSlot' size='5' />,\n";
-          echo "endTime: <input name='endTime' value='$endSlot' size='5' />,\n";
-          mishChoices($personID, 0 );
-		  taskChoices($personID, 0 );
+          echo "<form method='POST' action='DayFill2.php' >\n";
+		  echo "<input type='hidden' name='sc' value='$sc'/>";
+          echo "<input type='hidden' name='personID$sc' value='$personID' />\n";
+          echo "what: <input id='description$sc' name='description$sc' />,\n";
+          echo " <input type='hidden' name='startDate$sc' value='$whenstring' />\n";
+          echo " <input type='hidden' name='endDate$sc' value='$whenstring' />\n";
+          echo "startTme: <input name='startTime$sc' value='$startSlot' size='5' />,\n";
+          echo "endTime: <input name='endTime$sc' value='$endSlot' size='5' />,\n";
+          //mishChoices($personID, 0 );
+		  //taskChoices($personID, 0 );
+		  mtChoices( $personID, $sc );
+		  echo "<input type='hidden' id='taskID$sc' name='taskID$sc' value='-1' />";
           echo "<input type='submit' value='book it' />";
           echo "</form>";
           echo " </td>  ";
 	  echo "</tr> \n";
+	  $sc++;
+   }
+?>
+<?php
+   // echos a select box with all of the choices of mission (for this person),
+   // and then all of the choices for task.  
+   // The uncat/uncat mish should be the selected one.
+   // If you pick an existing task, it fills in the taskID and the Task.description
+   // All named/id fields have $sc tacked on the end
+   global $mishResults; // list of missions, re-use rather than refetch if possible
+   global $taskResults; // list of tasks, re-use if possible
+   function mtChoices( $personID, $sc )
+   {
+      global $mishResults;
+	  global $taskResults;
+      $qmish = "SELECT category, subcat, importance, mishID FROM Mission "
+	          ." WHERE personID='$personID' ORDER BY mishOrder; ";
+	  if ( $mishResults==0 ) { $rmish = mysql_query( $qmish ); $mishResults = $rmish; }
+	  else { $rmish = $mishResults; mysql_data_seek($rmish,0); }
+	  if ( noerror( $rmish ) )
+	  {
+	     echo "<select name='mishID$sc'>\n";
+	     $nr = mysql_num_rows( $rmish );
+		 for ( $i=0; $i<$nr; $i++ )
+		 {
+		    $row = mysql_fetch_array( $rmish );
+			$category = $row['category'];
+			$subcat   = $row['subcat'];
+			$mishID   = $row['mishID'];
+			$importance = $row['importance'];
+			echo "<option value='$mishID'  ";
+			if ($category=="uncat" && $subcat="uncat") { echo " SELECTED "; }
+			echo " > $category / $subcat </option>\n";
+		 }
+		 // echo "</select>\n";
+	  }
+
+      $qtask = "SELECT description, duration, mishID, taskID FROM Task "
+	       ." WHERE personID='$personID' "
+	  	   ." AND tstatus='0' " 
+		   ." AND tied='0' "
+		   ." ORDER BY mustdo desc, latest  "
+           .";";
+
+	  if ( $taskResults==0 ) { $rtask = mysql_query( $qtask ); $taskResults = $rtask; }
+	  else { $rtask = $taskResults; mysql_data_seek($rtask,0); }
+	  if ( noerror( $rtask ) )
+	  {
+	     //echo "<select name='taskID'>\n";
+	     $nr = mysql_num_rows( $rtask );
+		 for ( $i=0; $i<$nr; $i++ )
+		 {
+		    $row = mysql_fetch_array( $rtask );
+			$description = $row['description'];
+			$duration   = $row['duration'];
+			$mishID   = $row['mishID'];
+			$taskID   = $row['taskID'];
+			echo "<option  value='$mishID' "
+			   //." onclick='fillTaskID($taskID); " 
+			   ." onclick='"
+			   ." fillTagById(\"taskID$sc\",\"$taskID\");"      // find these in functions.js
+			   ." fillTagById(\"description$sc\",\"$description\");"
+			   ." '";
+			echo " > $description  </option>\n";
+		 }
+		 echo "</select>\n";
+	  }
    }
 ?>

@@ -1,6 +1,6 @@
 <?php
    // BookingAdd2.php
-   // processing for mission add form
+   // processing for booking add form
    // $_POST has a bunch of stuff from the form ... persondID, description, startDate, endDate,
    // startTime, endTime, mishID,
    // We make the Booking and a Task (dummy sort of) to go with it.
