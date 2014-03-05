@@ -20,7 +20,7 @@
 	  echo "<a href='Calendar.php'> Calendar </a> <br />\n";
 	  echo "<a href='BookingAdd.php'> add an event </a> <br />\n";
 	  echo "<a href='CalReview.php'> review </a> <br />\n";
-	  echo "<a href='DayFill.php'> Day Fill </a> <br />\n";
+	  echo "<a href='DayFillM.php'> Day Fill </a> <br />\n";
 
       echo "</div>";
    }
