@@ -62,10 +62,6 @@
 	  $previousDay = date("Y-m-d", noonObject( $whenstring ) - 3600*24 );
 	  $nextDay =     date("Y-m-d", noonObject( $whenstring ) + 3600*24 );
 	  
-	  echo "<a href='DayFill.php?theDate=$previousDay'>previous day</a> ";
-	  echo "<a href='DayFill.php?theDate=$nextDay'>next day</a> <br />";
-
-	  
       $q5 = "SELECT * from Booking, Task "
 	       ." WHERE Booking.taskID=Task.taskID AND Booking.personID='$personID' AND Task.personID='$personID' "
 		   ." AND status<3 "
@@ -110,7 +106,7 @@
 			$tstatus = $row['tstatus'];
 			$recurs = $row['recurs'];
 			$tied = $row['tied'];
-			if ($bug) { echo "recurs = $recurs <br /> \n"; }
+			// if ($bug) { echo "recurs = $recurs <br /> \n"; }
 			
 			// fill dead time to next event with 1-hour blocks
 		    while ( $filled < $startTime )
@@ -127,7 +123,12 @@
 								  // prep for the next loop
 	
 	        if ($startDate != $lastDate ) 
-			{ echo "<tr> <td colspan='2'> $startDate </td> </tr>\n";  $lastDate=$startDate; }
+			{
+			   echo "<tr> <td colspan='2'> $startDate ";  $lastDate=$startDate; 
+			   echo "<a href='DayFillM.php?theDate=$previousDay'>previous day</a> / ";
+	           echo "<a href='DayFillM.php?theDate=$nextDay'>next day</a> <br />";
+               echo " </td></tr>\n";
+			}
 			echo "   <tr>\n";
 			echo "      <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $startTime to $endTime </td>\n";
 			echo "      <td> <a href='BookingEdit.php?bookingID=$bookingID'> $descripsh </a> </td>\n";
