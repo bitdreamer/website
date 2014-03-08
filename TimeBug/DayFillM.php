@@ -68,6 +68,7 @@
 	  
       $q5 = "SELECT * from Booking, Task "
 	       ." WHERE Booking.taskID=Task.taskID AND Booking.personID='$personID' AND Task.personID='$personID' "
+		   ." AND status<3 "
 		   ." AND startDate='$whenstring' "
 		   ." ORDER BY startDate, startTime  "
            .";";
