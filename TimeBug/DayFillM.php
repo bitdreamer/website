@@ -237,7 +237,7 @@
 		 }
 		 // echo "</select>\n";
 	  }
-
+      /*
       $qtask = "SELECT description, duration, mishID, taskID FROM Task "
 	       ." WHERE personID='$personID' "
 	  	   ." AND tstatus='0' " 
@@ -266,7 +266,8 @@
 			   ." '";
 			echo " > $description  </option>\n";
 		 }
-		 echo "</select>\n";
 	  }
+	 */
+      echo "</select>\n";
    }
 ?>
