@@ -176,12 +176,18 @@
       global $sc; // slot count, number for THIS slot (all field add nubmer to name)
          $personID = $_SESSION['personID'];
 
-      echo "<tr> <td> <input name='startTime$sc' value='$startSlot' size='5' />  to "
-	      ." <input name='endTime$sc' value='$endSlot' size='5' /> </td>  ";
+      echo "<tr> <td> <input id='startTime$sc' name='startTime$sc' value='$startSlot' size='5' />  \n";
+	  echo "<input type='button' value='+' onclick='bump(\"startTime$sc\",0.5);' />\n";
+	  echo "<input type='button' value='-' onclick='bump(\"startTime$sc\",-0.5);' />\n";
+	  echo " to <input id='endTime$sc' name='endTime$sc' value='$endSlot' size='5' />\n";
+	  echo "<input type='button' value='+' onclick='bump(\"endTime$sc\",0.5);' />\n";
+	  echo "<input type='button' value='-' onclick='bump(\"endTime$sc\",-0.5);' />\n";
+	  echo " </td> \n";
 	  echo " <td>   ";
 	      echo "doit:<input name='doit$sc' type='checkbox' value='yes' />\n";
 		  echo "<input type='hidden' name='sc' value='$sc'/>";
-		  echo "<input type='button' value='E' onclick='doEat();' />";
+		  // echo "<input type='button' value='E' onclick='doEat();' />"; instead do shortcut menu
+		  taskChoicesPlus( $personID, $sc );
           echo "what: <input id='description$sc' name='description$sc' />,\n";
           echo " <input type='hidden' name='startDate$sc' value='$whenstring' />\n";
           echo " <input type='hidden' name='endDate$sc' value='$whenstring' />\n";
@@ -194,6 +200,14 @@
    }
 ?>
 <script>
+   function bump( bumpeeid,amt )
+   {
+      var bumpee = document.getElementById( bumpeeid );
+	  var v = bumpee.value;
+	  v = v*1 + amt;
+	  bumpee.value = v; 
+   }
+   
    function doEat()
    {
       alert("doEat...");
@@ -205,10 +219,45 @@
    }
 </script>
 <?php
+   // echos a select menu  with all of the shortcuts.  
+   // We want to put on the bottom of this the list of tasks (for this person).  
+   // the name of the selection box is ... doesn't matter.  The work is accomplished
+   // but the onclick for each ... that it fills in the description$sc and mishID$sc fields
+   // elsewhere on the row.  
+   global $taskResults; // list of shortcuts, re-use rather than refetch if possible
+   function taskChoicesPlus( $personID,  $sc )
+   {
+      global $taskResults;
+      $q = "SELECT description, duration, mishID, taskID FROM Task WHERE personID='$personID' "
+	  		   ." AND tstatus='0' " 
+		   ." AND tied='0' "
+		   ." ORDER BY mustdo desc, latest  "
+           .";";
+
+	  if ( $taskResults==0 ) { $r = mysql_query( $q ); /* echo "first"; */ $taskResults = $r; }
+	  else { $r = $taskResults; mysql_data_seek($r,0); /* echo "next"; */ }
+	  if ( noerror( $r ) )
+	  {
+	     echo "<select name='shortcut$sc'>\n";
+	     $nr = mysql_num_rows( $r );
+		 for ( $i=0; $i<$nr; $i++ )
+		 {
+		    $row = mysql_fetch_array( $r );
+			$description = $row['description'];
+			$duration   = $row['duration'];
+			$mishID   = $row['mishID'];
+			$taskID   = $row['taskID'];
+			echo "<option id='' value='$taskID' ";
+			if ($taskID==$selected) { echo " SELECTED "; }
+			echo " onclick='alert(\"click on $description\");' > $description  </option>\n";
+		 }
+		 echo "</select>\n";
+	  }
+   }
+?>
+<?php
    // echos a select box with all of the choices of mission (for this person),
-   // and then all of the choices for task.  
    // The uncat/uncat mish should be the selected one.
-   // If you pick an existing task, it fills in the taskID and the Task.description
    // All named/id fields have $sc tacked on the end
    global $mishResults; // list of missions, re-use rather than refetch if possible
    global $taskResults; // list of tasks, re-use if possible
