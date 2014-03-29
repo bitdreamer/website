@@ -184,9 +184,9 @@
 	  echo "<input type='button' value='-' onclick='bump(\"endTime$sc\",-0.5);' />\n";
 	  echo " </td> \n";
 	  echo " <td>   ";
-	      echo "doit:<input name='doit$sc' type='checkbox' value='yes' />\n";
+	      echo "doit:<input id='doit$sc' name='doit$sc' type='checkbox' value='yes' />\n";
 		  echo "<input type='hidden' name='sc' value='$sc'/>";
-		  taskChoicesPlus( $personID, $sc );
+		  shorkcuts( $personID, $sc );
           echo "what: <input id='description$sc' name='description$sc' />,\n";
           echo " <input type='hidden' name='startDate$sc' value='$whenstring' />\n";
           echo " <input type='hidden' name='endDate$sc' value='$whenstring' />\n";
@@ -210,18 +210,45 @@
    // set endTime so duration is 0.5, fill in what and mish and check the checkbox
    function doEat( sc )
    {
-      alert("doEat..."); 
+      // set end time to start time + 0.5
+      var stst = "startTime"+sc; 
+	  var st = document.getElementById( stst ); // st is startTime object
+      var etst = "endTime"+sc;
+      var et = document.getElementById( etst ); // et is endTime object 	  
+	  et.value = st.value * 1 + 0.5;
+	  
+	  // check the doit checkbox
+	  var dist = "doit"+sc;
+	  var di = document.getElementById( dist ); // di is doit checkbox object
+	  di.checked = true; 
+	  
+	  // fill in the description to breakfast, lunch or dinner depending on time of day
+	  var descst = "description"+sc; 
+	  var desc = document.getElementById( descst ); // desc is description object
+	  if      ( st.value<11 ) { desc.value = "breakfast"; }
+	  else if ( st.value<16 ) { desc.value = "lunch"; }
+	  else                    { desc.value = "dinner"; }
+	  
+	  // set mission id to 3
+	  var mist = "mishID"+sc;
+	  var mish = document.getElementById( mist ); // mish is the select object for mishID
+	  mish.value = 3; // this is the mission for food, we just know that.
+     
    }
 </script>
 <?php
-   // echos a select menu  with all of the shortcuts.  
-   // We want to put on the bottom of this the list of tasks (for this person).  
-   // the name of the selection box is ... doesn't matter.  The work is accomplished
-   // but the onclick for each ... that it fills in the description$sc and mishID$sc fields
-   // elsewhere on the row.  
+   // echos a select menu  with all of the shortcuts.  tasks fill out the end
+   // Call script to handle the shortcut
    global $taskResults; // list of shortcuts, re-use rather than refetch if possible
-   function taskChoicesPlus( $personID,  $sc )
+   function shorkcuts( $personID,  $sc )
    {
+	  echo "<select name='shortcut$sc'>\n";
+	  
+	  echo "<option > shortcuts </option>\n";
+	  echo "<option onclick='doEat($sc);' > eat a meal  </option>\n";
+
+	  
+	  
       global $taskResults;
       $q = "SELECT description, duration, mishID, taskID FROM Task WHERE personID='$personID' "
 	  		   ." AND tstatus='0' " 
@@ -233,7 +260,6 @@
 	  else { $r = $taskResults; mysql_data_seek($r,0); /* echo "next"; */ }
 	  if ( noerror( $r ) )
 	  {
-	     echo "<select name='shortcut$sc'>\n";
 	     $nr = mysql_num_rows( $r );
 		 for ( $i=0; $i<$nr; $i++ )
 		 {
@@ -266,7 +292,7 @@
 	  else { $rmish = $mishResults; mysql_data_seek($rmish,0); }
 	  if ( noerror( $rmish ) )
 	  {
-	     echo "<select name='mishID$sc'>\n";
+	     echo "<select name='mishID$sc' id='mishID$sc'>\n";
 	     $nr = mysql_num_rows( $rmish );
 		 for ( $i=0; $i<$nr; $i++ )
 		 {
