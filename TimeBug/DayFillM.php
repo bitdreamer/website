@@ -186,7 +186,6 @@
 	  echo " <td>   ";
 	      echo "doit:<input name='doit$sc' type='checkbox' value='yes' />\n";
 		  echo "<input type='hidden' name='sc' value='$sc'/>";
-		  // echo "<input type='button' value='E' onclick='doEat();' />"; instead do shortcut menu
 		  taskChoicesPlus( $personID, $sc );
           echo "what: <input id='description$sc' name='description$sc' />,\n";
           echo " <input type='hidden' name='startDate$sc' value='$whenstring' />\n";
@@ -208,14 +207,10 @@
 	  bumpee.value = v; 
    }
    
-   function doEat()
+   // set endTime so duration is 0.5, fill in what and mish and check the checkbox
+   function doEat( sc )
    {
-      alert("doEat...");
-	  // you want to make the duration 0.5, put in the what, set the mish and 
-	  // check the checkbox.  We may have to know what the SC number is to do all that.
-	  // It would be nice to cut down on space wasting (tons of the same button).  Could
-	  // we highlight the probable target and then juts have ONE row of buttons at
-	  // the top that fills it?  Don't make it unlearnable.
+      alert("doEat..."); 
    }
 </script>
 <?php
