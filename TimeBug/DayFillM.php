@@ -207,33 +207,74 @@
 	  bumpee.value = v; 
    }
    
-   // set endTime so duration is 0.5, fill in what and mish and check the checkbox
+   // set endTime so duration is 0.5, fill in breakfast/lunch/dinner and mish = 3 = food 
+   // and check the checkbox
    function doEat( sc )
    {
-      // set end time to start time + 0.5
+      setDuration( sc, 0.5 ); // set end time to start time + 0.5
+	  setDoit(sc); // check the doit checkbox
+	  setMission(sc, 3 ); // set mission id to 3 = basics/food
+
+	  // fill in the description to breakfast, lunch or dinner depending on time of day
+      var stst = "startTime"+sc; 
+	  var st = document.getElementById( stst ); // st is startTime object
+	  if      ( st.value<11 ) {setDescription(sc,"breakfast"); }
+	  else if ( st.value<16 ) {setDescription(sc,"lunch"); }
+	  else                    {setDescription(sc,"dinner"); }
+   }
+   
+   // set duration = 0.5, "shower and dress", and mish = 3 = food 
+   // and check the checkbox
+   function doShower( sc )
+   {
+      setDuration( sc, 0.5 ); // set end time to start time + 0.5
+	  setDoit(sc); // check the doit checkbox
+	  setMission(sc, 2 ); // set mission id to 2 = basics/shower
+	  setDescription(sc,"shower and dress");
+   }
+   
+   // set general travel item, 
+   function doTravel( sc )
+   {
+      setDuration( sc, 0.5 ); // set end time to start time + 0.5
+	  setDoit(sc); // check the doit checkbox
+	  setMission(sc, 33 ); // set mission id to 33 = basics/travel
+	  setDescription(sc,"to next place");
+   }
+   
+   
+   // set mission id to m
+   function setMission( sc, m )
+   {
+	  var mist = "mishID"+sc;
+	  var mish = document.getElementById( mist ); // mish is the select object for mishID
+	  mish.value = m; // this is the mission for food, we just know that.
+   }
+   
+   // set description to blurb
+   function setDescription( sc, blurb )
+   {
+	  var descst = "description"+sc; 
+	  var desc = document.getElementById( descst ); // desc is description object
+	  desc.value = blurb; 
+   }
+   
+   // set end time to start time +dur   
+   function setDuration( sc, dur )
+   {
       var stst = "startTime"+sc; 
 	  var st = document.getElementById( stst ); // st is startTime object
       var etst = "endTime"+sc;
       var et = document.getElementById( etst ); // et is endTime object 	  
-	  et.value = st.value * 1 + 0.5;
-	  
-	  // check the doit checkbox
+	  et.value = st.value * 1 + dur;
+   }
+   
+   // set the doit checkbox
+   function setDoit( sc )
+   {
 	  var dist = "doit"+sc;
 	  var di = document.getElementById( dist ); // di is doit checkbox object
 	  di.checked = true; 
-	  
-	  // fill in the description to breakfast, lunch or dinner depending on time of day
-	  var descst = "description"+sc; 
-	  var desc = document.getElementById( descst ); // desc is description object
-	  if      ( st.value<11 ) { desc.value = "breakfast"; }
-	  else if ( st.value<16 ) { desc.value = "lunch"; }
-	  else                    { desc.value = "dinner"; }
-	  
-	  // set mission id to 3
-	  var mist = "mishID"+sc;
-	  var mish = document.getElementById( mist ); // mish is the select object for mishID
-	  mish.value = 3; // this is the mission for food, we just know that.
-     
    }
 </script>
 <?php
@@ -246,6 +287,8 @@
 	  
 	  echo "<option > shortcuts </option>\n";
 	  echo "<option onclick='doEat($sc);' > eat a meal  </option>\n";
+	  echo "<option onclick='doShower($sc);' > wash and dress  </option>\n";
+	  echo "<option onclick='doTravel($sc);' > travel to next   </option>\n";
 
 	  
 	  
