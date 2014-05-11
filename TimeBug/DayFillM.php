@@ -145,8 +145,7 @@
 				else                          {  $nextie = 24;  }
 				//$nextie = 72;
 				slotFill( $filled, $nextie, $whenstring );
-				$filled = $nextie;
-			
+				$filled = $nextie;	
 			 }
              $filled = 24;  // as we proceed to write the following event, we will
 			                      // have filled through the end of it.  This is just
@@ -242,6 +241,16 @@
 	  setDescription(sc,"to next place");
    }
    
+   // set to do a task 
+   function doExistingTask( sc, taskID, duration, description, mishID )
+   {
+// alert("doExistingTask: starting ...");
+      setDuration( sc, duration ); // set end time to start time plus duration
+	  setDoit( sc ); // check that this entry is now valid
+	  setMission( sc, mishID );
+	  setDescription( sc, description );
+	  setTaskID( sc, taskID );
+   }
    
    // set mission id to m
    function setMission( sc, m )
@@ -249,6 +258,14 @@
 	  var mist = "mishID"+sc;
 	  var mish = document.getElementById( mist ); // mish is the select object for mishID
 	  mish.value = m; // this is the mission for food, we just know that.
+   }
+   
+   // set the taskID (hidden tag) to tid
+   function setTaskID( sc, tid )
+   {
+      var tist = "taskID"+sc;
+	  var tish = document.getElementById( tist );
+	  tish.value = tid; 
    }
    
    // set description to blurb
@@ -289,9 +306,7 @@
 	  echo "<option onclick='doEat($sc);' > eat a meal  </option>\n";
 	  echo "<option onclick='doShower($sc);' > wash and dress  </option>\n";
 	  echo "<option onclick='doTravel($sc);' > travel to next   </option>\n";
-
-	  
-	  
+  
       global $taskResults;
       $q = "SELECT description, duration, mishID, taskID FROM Task WHERE personID='$personID' "
 	  		   ." AND tstatus='0' " 
@@ -313,7 +328,8 @@
 			$taskID   = $row['taskID'];
 			echo "<option id='' value='$taskID' ";
 			if ($taskID==$selected) { echo " SELECTED "; }
-			echo " onclick='alert(\"click on $description\");' > $description  </option>\n";
+			//echo " onclick='alert(\"click on $description\");' > $description  </option>\n";
+			echo " onclick='doExistingTask($sc,$taskID,$duration,\"$description\",$mishID);' > $description  </option>\n";
 		 }
 		 echo "</select>\n";
 	  }
