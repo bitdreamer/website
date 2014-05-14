@@ -89,7 +89,7 @@
 					errorFree( $radd );
 				  }
 			   }
-			   else
+			   else // task already exists, just mark it to show it's booked
 			   {
 				  $qmod = "UPDATE Task SET "
 					   ."  tied='1' " // associated with a booking
