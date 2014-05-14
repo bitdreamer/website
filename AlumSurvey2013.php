@@ -8,7 +8,7 @@
    include("leftMenu.php");
    include("shopHeader.php");
    include("tabledump.php");
-   
+   //hi
    $eventCode = $_GET['eventCode'];
    if ( $eventCode != addslashes($eventCode) || $eventCode=="" ) { $eventCode = "dk"; }
 ?>
