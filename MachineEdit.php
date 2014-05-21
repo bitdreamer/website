@@ -54,7 +54,9 @@
 		  echo "name: $name <br />\n";
 		  echo "<input type='hidden' name='mname' id='mname' value='$name' />";
 		  echo "ip : <input name='ip' value='$ip' /> <br /> \n";
-		  echo "status : <input name='status' value='$status' /> <br /> \n";
+		  echo "status : <input name='status' value='$status' /> "
+		     ." 0=non-existent 1=exists but hardware no power up, 2=power but no boot, "
+			 ." 3=boot but flakey, 4=boot os solid,        5=with software<br /> \n";
 		  echo "comment : <input name='comment' value='$comment' /> <br /> \n";
 		  echo "parts : <input name='parts' value='$parts' /> <br /> \n";
 		  echo "os : <input name='os' value='$os' /> <br /> \n";

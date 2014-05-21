@@ -10,7 +10,7 @@
    //include("shopHeader.php");
    //include("tabledump.php");
    
-   $bug = true;
+   $bug = false;
    
 	$name    = $_POST['mname'] ;
 	$ip      = addslashes( $_POST['ip'] );
