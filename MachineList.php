@@ -21,6 +21,7 @@
       <div id="main">
       <p>
          <?php machineList(); ?>  
+		 <?php machineAdd(); ?>
       </p>
 		</div>   <!-- end main -->
 
@@ -33,6 +34,8 @@
       $result = mysql_query( $query );
       if ( noerror( $result ) )
       {
+	     echo "<table border='1'>\n";
+		 echo "<td> name </td><td> ip </td><td> status </td>\n";
          $nr = mysql_num_rows( $result );
          for ( $i=0; $i<$nr; $i++ )
          {
@@ -43,11 +46,18 @@
             $comment = $row['comment'];
             $parts   = $row['parts'];
             $os      = $row['os']; 
-            $year    = $row['createDate'];
+            $createDate    = $row['createDate'];
+			$retireDate = $row['retireDate'];
             $hd      = $row['hd'];
             $ram     = $row['ram'];
-            echo " $name $ip $status $comment $parts $os $year $hd $ram <br /> \n";
+			echo "<tr>\n";
+			echo "<td> <a href='MachineEdit.php?name=$name'> $name </a>  </td>\n";
+			echo "<td> $ip </td>\n";
+			echo "<td> $status </td>\n";
+            //echo " $name $ip $status $comment $parts $os $createDate $hd $ram <br /> \n";
+			echo "</tr>\n";
          }
+		 echo "</table>\n";
       }
    }
    
@@ -57,6 +67,7 @@
    function machineAdd()
    {
       echo "<form action='MachineAdd.php' method='POST'>\n";
+	  echo "machine name to add, no spaces ";
 	  echo "<input name='name' id='name' >";
 	  echo "<input type='submit' /> \n";
 	  echo "</form>\n";

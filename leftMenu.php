@@ -40,6 +40,7 @@
       linker("SurveyShow.php?eventCode=EOYP2013May4","show 2013 eoy party",1);
       linker("MajorList.php","majors",3);
 	  linker("TimeBug/Calendar.php","TimeBug",1);
+	  linker("MachineList.php","Machines",1);
       echo "</div>";
    }
 
